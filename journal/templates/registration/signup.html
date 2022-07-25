@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+    .helptext{
+        font-size:11px;
+        display: inline-block;
+    }
+    label, input{
+        width: 100%;
+    }
+    ul{
+        font-size:11px;
+    }
+</style>
+
+<div class="row">
+    <div class="col-md-4"></div>
+
+    <div class="col-md-4">
+        <h1>Register</h1>
+        </br>
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Sign Up</button>
+        </form>
+
+        </br></br>
+    </div>
+
+    <div class="col-md-4"></div>
+
+</div>
+
+{% endblock %}

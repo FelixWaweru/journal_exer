@@ -16,6 +16,19 @@
     <title>JOURNAL</title>
   </head>
   <body>
+
+
+
+  {% if messages %}
+        {% for message in messages %}
+          <div class="alert {{ message.tags }}" role="alert" style="margin: 0%; padding: 5px; text-align: center;">
+            {{ message }}
+            <span class="closebtn" onclick="this.parentElement.style.display='none';"
+              style=" float: right !important;">&times;</span>
+          </div>
+        {% endfor %}
+  {% endif %}
+
   {% include 'navbar.html' %}
   </br>
     <div class = "container">

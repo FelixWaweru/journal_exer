@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Member
+from .models import Member, Entry, Share
 from django.contrib.auth.admin import UserAdmin
 
 
@@ -9,3 +9,5 @@ class MemberConfig(UserAdmin):
 
 # Register your models here.
 admin.site.register(Member, MemberConfig)
+admin.site.register(Entry)
+admin.site.register(Share)
