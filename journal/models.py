@@ -55,7 +55,7 @@ class Entry(models.Model):
     user_id = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE)
     text_post = models.CharField(max_length=500)
-    entry_date = models.DateTimeField()
+    entry_date = models.DateTimeField(default=timezone.now)
     share_status = models.BooleanField(default=False)
 
 # The Shared Posts Model

@@ -7,6 +7,7 @@ from django.contrib.auth.signals import user_logged_in, user_logged_out, user_lo
 from django.contrib.auth.forms import UserCreationForm
 from .forms import SignUpForm, CustomUserCreationForm, EntrySumbission
 from .models import Entry
+from django.utils import timezone
 from django.urls import reverse_lazy
 from django.views import generic
 from django.core.exceptions import ObjectDoesNotExist
@@ -18,29 +19,35 @@ User = get_user_model()
     
 # Views
 def home(request):
-    if request.method == 'POST' and form.is_valid():
-        user_id = request.user
-        text_post = str(form.cleaned_data.get('submission'))
-        entry_date = timezone.now
+    form = EntrySumbission()
+    if request.method == 'POST' and request.user.is_anonymous == False:
+        form = EntrySumbission(request.POST)
+        if form.is_valid():
+            user_id = request.user
+            text_post = str(form.cleaned_data.get('submission'))
+            # entry_date = timezone.now
 
-        entry = Entry.objects.create(
-        user_id=user_id, text_post=text_post, entry_date=entry_date)
-        entry.save()
-        messages.success(request, "Journal Entry Submitted")
-    else:
-        form = EntrySumbission()
+            entry = Entry.objects.create(
+            user_id=user_id, text_post=text_post)
+            entry.save()
+            messages.success(request, "Journal Entry Submitted")
+    elif request.method == 'POST' and request.user.is_anonymous:
+        messages.error(request, "Kindly Login To Submit Entry")
     
     try:
-        entry = Entry.objects.filter(user_id=request.user)
+        entry = Entry.objects.filter(
+            user_id=request.user).order_by('-entry_date')
         main_context = {
             'entries': entry,
+            'entries_count':len(entry),
             'form': form
         }
         return render(request, 'index.html', main_context)
 
     except:
         main_context = {
-            'entries': '',
+            'entries': None,
+            'entries_count': None,
             'form': form
         }
         return render(request, 'index.html', main_context)

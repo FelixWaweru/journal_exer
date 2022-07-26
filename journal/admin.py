@@ -7,6 +7,7 @@ class MemberConfig(UserAdmin):
     ordering = ('-id',)
     list_display = ('email', 'first_name', 'is_active', 'is_staff')
 
+
 # Register your models here.
 admin.site.register(Member, MemberConfig)
 admin.site.register(Entry)

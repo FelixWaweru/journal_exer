@@ -5,7 +5,7 @@
     <div class="col-md-6">
         <h1>Journal Entry</h1>
         </br>
-        <form type="POST" >
+        <form method="POST" action="" id="entry_form">
           {% csrf_token %}
           <div class="mb-3">
             <!-- <textarea class="form-control" id="journal_entry" rows="7" placeholder="Type in your Journal Entry" onkeydown="countChars()" onkeyup="countChars()" onmouseout="countChars()"></textarea> -->
@@ -24,8 +24,15 @@
         </br>
 
         <div class="accordion" id="accordionExample">
-          {% if entries == '' %}
-          Log in to submit your first journal entry
+
+          {% if entries is None %}
+
+            Log in to submit your first journal entry
+
+          {% elif entries_count == 0 %}
+          
+            Submit your first journal entry
+
           {% else %}
           
           {% for entry in entries %}
