@@ -22,3 +22,15 @@ class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username',)
+
+# The Journal submission form
+class EntrySumbission(forms.Form):
+    submission = forms.CharField(widget=forms.TextInput(attrs={
+        'placeholder': 'Type in your Journal Entry',
+        'class':'form-control',
+        'id':'journal_entry',
+        'rows':'7',
+        'onkeydown':'countChars()',
+        'onkeyup':'countChars()',
+        'onmouseout':'countChars()'
+    }))

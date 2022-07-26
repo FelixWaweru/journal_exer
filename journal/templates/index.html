@@ -5,11 +5,11 @@
     <div class="col-md-6">
         <h1>Journal Entry</h1>
         </br>
-        <form type="submit">
+        <form type="POST" >
+          {% csrf_token %}
           <div class="mb-3">
-            <!--<label for="journal_entry" class="form-label">Journal Entry</label>-->
-            <textarea class="form-control" id="journal_entry" rows="7"
-                      placeholder="Type in your Journal Entry" onkeydown="countChars()" onkeyup="countChars()" onmouseout="countChars()"></textarea>
+            <!-- <textarea class="form-control" id="journal_entry" rows="7" placeholder="Type in your Journal Entry" onkeydown="countChars()" onkeyup="countChars()" onmouseout="countChars()"></textarea> -->
+              {{ form.submission }}
             <div id="entry_counter" class="form-text">500</div>
           </div>
           <button type="submit" class="btn btn-primary">Submit</button>
@@ -24,32 +24,26 @@
         </br>
 
         <div class="accordion" id="accordionExample">
-
+          {% if entries == '' %}
+          Log in to submit your first journal entry
+          {% else %}
+          
+          {% for entry in entries %}
           <div class="accordion-item">
-            <h2 class="accordion-header" id="heading1">
-              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="false" aria-controls="collapse1">
-                  <strong>12/12/2022:</strong>&nbsp Today I went ...
+            <h2 class="accordion-header" id="heading{{ entry.id }}">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ entry.id }}" aria-expanded="false" aria-controls="collapse{{ entry.id }}">
+                  <strong>{{ entry.entry_date }}</strong>
               </button>
             </h2>
-            <div id="collapse1" class="accordion-collapse collapse" aria-labelledby="heading1" data-bs-parent="#accordionExample">
+            <div id="collapse{{ entry.id }}" class="accordion-collapse collapse" aria-labelledby="heading{{ entry.id }}" data-bs-parent="#accordionExample">
               <div class="accordion-body">
-                Today I went to hell. It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                {{ entry.text_post }}
               </div>
             </div>
           </div>
+          {% endfor %}
+          {% endif %}
 
-          <div class="accordion-item">
-            <h2 class="accordion-header" id="heading2">
-              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapse1">
-                  <strong>12/12/2022:</strong>&nbsp Today I went ...
-              </button>
-            </h2>
-            <div id="collapse2" class="accordion-collapse collapse" aria-labelledby="heading2" data-bs-parent="#accordionExample">
-              <div class="accordion-body">
-                Today I went to hell. It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-              </div>
-            </div>
-          </div>
         </div>
         </br></br>
 
