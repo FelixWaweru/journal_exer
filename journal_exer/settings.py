@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crispy_forms',
     'django_celery_results',
+    'django_celery_beat',
     'journal'
 ]
 
@@ -119,7 +120,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Africa/Asmara'
+TIME_ZONE = 'Africa/Nairobi'
 
 USE_I18N = True
 
@@ -138,6 +139,15 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Email Server Settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_PORT = 587
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'meanbot001@gmail.com'
+EMAIL_HOST_PASSWORD = 'jsckueuwtmusxjrl'
+EMAIL_USE_TLS = True
+
+
 # Custom User Model
 AUTH_USER_MODEL = 'journal.Member'
 LOGIN_REDIRECT_URL = "/"
@@ -150,3 +160,6 @@ CELERY_TASK_SERIALIZER='json'
 CELERY_TIMEZONE='Africa/Nairobi'
 
 CELERY_RESULT_BACKEND='django-db'
+
+# Celery Beat Settings
+CELERY_BEAT_SCHEDULER='django_celery_beat.schedulers:DatabaseScheduler'

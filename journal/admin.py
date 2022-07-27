@@ -5,7 +5,7 @@ from django.contrib.auth.admin import UserAdmin
 
 class MemberConfig(UserAdmin):
     ordering = ('-id',)
-    list_display = ('email', 'first_name', 'is_active', 'is_staff')
+    list_display = ('email', 'first_name', 'last_post', 'is_staff')
 
 
 # class EntryConfig(UserAdmin):

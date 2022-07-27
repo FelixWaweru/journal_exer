@@ -37,7 +37,7 @@ class Member(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=20)
     email = models.EmailField(unique=True)
     password = models.CharField(max_length=200)
-    last_post = models.DateField(blank=True, null=True)
+    last_post = models.DateTimeField(blank=True, null=True)
     username = models.CharField(max_length=20, blank=True, null=True)
     date_joined = models.DateTimeField(default=timezone.now)
     is_staff = models.BooleanField(default=False)
