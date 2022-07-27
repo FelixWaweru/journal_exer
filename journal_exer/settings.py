@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'crispy_forms',
+    'django_celery_results',
     'journal'
 ]
 
@@ -141,3 +142,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'journal.Member'
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
+
+# Celery Tasks
+CELERY_BROKER_URL="redis://127.0.0.1:6379"
+CELERY_ACCEPT_CONTENT=['application/json']
+CELERY_TASK_SERIALIZER='json'
+CELERY_TIMEZONE='Africa/Nairobi'
+
+CELERY_RESULT_BACKEND='django-db'

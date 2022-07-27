@@ -7,6 +7,7 @@ from django.contrib.auth.signals import user_logged_in, user_logged_out, user_lo
 from django.contrib.auth.forms import UserCreationForm
 from .forms import SignUpForm, CustomUserCreationForm, EntrySumbission
 from .models import Entry
+from .tasks import email_send
 from django.utils import timezone
 from django.urls import reverse_lazy
 from django.views import generic
@@ -52,21 +53,21 @@ def home(request):
         }
         return render(request, 'index.html', main_context)
 
-
-
 class signup(generic.CreateView):
     form_class = SignUpForm
     success_url = reverse_lazy('login')
     template_name = 'registration/signup.html'
 
+def celery_test(request):
+    email_send.delay()
+    return HttpResponse("Complete")
+
 # Message
 def logged_in_message(sender, user, request, **kwargs):
     messages.success(request, "Welcome Back")
 
-
 def logged_out_message(sender, user, request, **kwargs):
     messages.success(request, "Successfully Logged Out")
-
 
 def log_in_failed(sender, request, **kwargs):
     messages.error(request, "Login Failed. Please check your details and try again")

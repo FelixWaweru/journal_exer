@@ -8,6 +8,10 @@ class MemberConfig(UserAdmin):
     list_display = ('email', 'first_name', 'is_active', 'is_staff')
 
 
+# class EntryConfig(UserAdmin):
+#     list_display = ('entry__user_id', 'entry__entry_date',
+#                     'entry__share_status')
+
 # Register your models here.
 admin.site.register(Member, MemberConfig)
 admin.site.register(Entry)
