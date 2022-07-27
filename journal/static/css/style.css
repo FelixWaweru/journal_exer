@@ -1,12 +1,26 @@
 h1{
-    color: blue;
+    color: #ff5226;
 }
 
-body{
-    background: #121212;
+.dark-mode-body{
+    background: #121212 !important;
 }
 
-/* Dark Theme: https: //stackoverflow.com/questions/56511466/how-to-create-a-jquery-function-to-toggle-dark-mode */ 
-/* .form-control{
-    background-color: #202020;
-} */
+.dark-mode-textarea{
+    background: #202020 !important;
+    color: #ffffff !important;
+}
+
+.dark-mode-accordion-header{
+    background: #121212 !important;
+    color: #ffffff !important;
+}
+
+.dark-mode-accordion-content{
+    background: #202020 !important;
+    color: #ffffff !important;
+}
+
+.dark-mode-labels {
+    color: #ffffff !important;
+}
