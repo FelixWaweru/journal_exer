@@ -64,4 +64,4 @@ class Share(models.Model):
                                     on_delete=models.CASCADE)
     shared_with = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE)
-    share_date = models.DateField()
+    share_date = models.DateTimeField(default=timezone.now)

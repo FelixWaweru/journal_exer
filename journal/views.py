@@ -6,7 +6,7 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth.signals import user_logged_in, user_logged_out, user_login_failed
 from django.contrib.auth.forms import UserCreationForm
 from .forms import SignUpForm, CustomUserCreationForm, EntrySumbission
-from .models import Entry, Member
+from .models import Entry, Member, Share
 from .tasks import email_send
 from django.utils import timezone
 from datetime import datetime
@@ -31,11 +31,13 @@ def home(request):
             entry = Entry.objects.create(user_id=user_id, text_post=text_post)
             member = Member.objects.get(pk=request.user.id)
             member.last_post = timezone.localtime()
+            if len(text_post)>500:
+                messages.error(request, "Journal Entry Too Long")
+            else:
+                entry.save()
+                member.save()
 
-            entry.save()
-            member.save()
-
-            messages.success(request, "Journal Entry Submitted")
+                messages.success(request, "Journal Entry Submitted")
     elif request.method == 'POST' and request.user.is_anonymous:
         messages.error(request, "Kindly Login To Submit Entry")
     
@@ -63,13 +65,19 @@ class signup(generic.CreateView):
     template_name = 'registration/signup.html'
 
 def celery_test(request):
-    # email_send.delay()
-    today = timezone.now()
-    yesterday = timezone.now() - timezone.timedelta(1)
-    all_entries = Entry.objects.filter(entry_date__range=[yesterday, today]).values_list(
-        'text_post', flat=True).order_by('?')
+    email_send.delay()
+    # today = timezone.now()
+    # yesterday = timezone.now() - timezone.timedelta(1)
+    # all_entries = Entry.objects.filter(entry_date__range=[yesterday, today]).order_by('?')
+
+    # final_entries = all_entries.values_list(
+    #     'text_post', flat=True)
     
-    print(all_entries)
+    # new_share = Share.objects.create(
+    #     entry_id=all_entries[0], shared_with=request.user)
+    # new_share.save()
+
+    # print(all_entries[0])
     return HttpResponse("Complete")
 
 # Message
